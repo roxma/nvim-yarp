@@ -36,7 +36,10 @@ com -nargs=1 Hello call s:hello.request(<f-args>)
 
 ## Example for existing neovim rplugin porting to Vim 8
 
-Considering this simple rplugin.
+A full demo could be found at
+[nvim-typescript#84](https://github.com/mhartington/nvim-typescript/pull/84).
+
+Now let's consider the following simple rplugin.
 
 After `UpdateRemotePlugins` and restarting neovim, you get `foobar` by `:echo
 Bar()`.
