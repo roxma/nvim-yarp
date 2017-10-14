@@ -7,7 +7,7 @@ This is my attempt on writing a remote plugin framework without
 ## Requirements
 
 - `has('python3')`
-- For vim8 support,
+- For Vim 8 support,
   [roxma/vim-hug-neovim-rpc](https://github.com/roxma/vim-hug-neovim-rpc)
 
 ## Usage
@@ -32,4 +32,56 @@ com HelloAsync call s:hello.notify('greet')
 
 " You could type :Hello greet
 com -nargs=1 Hello call s:hello.request(<f-args>)
+```
+
+## Example for existing neovim rplugin porting to Vim 8
+
+Considering this simple rplugin, after `UpdateRemotePlugins` and restarted
+neovim, you get `foobar` by `:echo Bar()`.
+
+rplugin/python3/foo.py
+
+```python
+# simple neovim remote plugin example
+import neovim
+
+
+@neovim.plugin
+class Foo(object):
+
+    def __init__(self, vim):
+        self._vim = vim
+
+    @neovim.function("Bar", sync=True)
+    def bar(self, args):
+        return 'foobar'
+```
+
+For working on Vim 8, you need to add these two files:
+
+plugin/foo.vim
+
+```
+if has('nvim')
+    finish
+endif
+
+let s:foo = yarp#py3('foo_wrap')
+
+func! Bar()
+    return s:foo.call('bar')
+endfunc
+```
+
+pythonx/foo_wrap.py
+
+```
+from foo import Foo as _Foo
+import vim
+
+_obj = _Foo(vim)
+
+
+def bar(*args):
+    return _obj.bar(args)
 ```
