@@ -36,13 +36,13 @@ com -nargs=1 Hello call s:hello.request(<f-args>)
 
 ## Example for existing neovim rplugin porting to Vim 8
 
-Considering this simple rplugin, after `UpdateRemotePlugins` and restarted
-neovim, you get `foobar` by `:echo Bar()`.
+Considering this simple rplugin.
 
-rplugin/python3/foo.py
+After `UpdateRemotePlugins` and restarting neovim, you get `foobar` by `:echo
+Bar()`.
 
 ```python
-# simple neovim remote plugin example
+# rplugin/python3/foo.py
 import neovim
 
 
@@ -59,9 +59,9 @@ class Foo(object):
 
 For working on Vim 8, you need to add these two files:
 
-plugin/foo.vim
 
-```
+```vim
+" plugin/foo.vim
 if has('nvim')
     finish
 endif
@@ -73,9 +73,9 @@ func! Bar()
 endfunc
 ```
 
-pythonx/foo_wrap.py
 
-```
+```python
+# pythonx/foo_wrap.py
 from foo import Foo as _Foo
 import vim
 
