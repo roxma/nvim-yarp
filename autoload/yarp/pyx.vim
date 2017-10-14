@@ -10,9 +10,10 @@ func! yarp#pyx#init() dict
         let s:script = globpath(&rtp,'pythonx/yarp.py',1)
     endif
 
-    let cmd = [exe, s:script, self.module]
-    let opts = {'rpc': v:true, 'on_stderr': function('yarp#on_stderr')}
-    let self.channel = jobstart(cmd, opts)
+    let cmd = [exe, s:script, yarp#_serveraddr(), self.id, self.module]
+    let opts = {'on_stderr': function('yarp#on_stderr')}
+    let self.job = yarp#_jobstart(cmd, opts)
+    return
 endfunc
 
 func! s:pyexe()

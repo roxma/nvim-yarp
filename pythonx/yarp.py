@@ -1,11 +1,22 @@
-from neovim import attach
+from neovim import attach, setup_logging
 import sys
 import importlib
 
-module = sys.argv[1]
+serveraddr = sys.argv[1]
+yarpid = int(sys.argv[2])
+module = sys.argv[3]
 module_obj = None
 
-nvim = attach('stdio')
+setup_logging(module)
+
+# create another connection to avoid synchronization issue?
+if len(serveraddr.split(':')) == 2:
+    serveraddr, port = serveraddr.split(':')
+    port = int(port)
+    nvim = attach('tcp', address=serveraddr, port=port)
+else:
+    nvim = attach('socket', path=serveraddr)
+
 sys.modules['vim'] = nvim
 sys.modules['nvim'] = nvim
 
@@ -16,6 +27,8 @@ for path in paths.split("\n"):
         continue
     if path not in sys.path:
         sys.path.append(path)
+
+nvim.call('yarp#_channel_started', yarpid, nvim.channel_id)
 
 module_obj = importlib.import_module(module)
 
