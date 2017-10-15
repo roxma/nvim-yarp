@@ -7,8 +7,9 @@ This is my attempt on writing a remote plugin framework without
 ## Requirements
 
 - `has('python3')`
-- For Vim 8 support,
-  [roxma/vim-hug-neovim-rpc](https://github.com/roxma/vim-hug-neovim-rpc)
+- For Vim 8:
+  - [roxma/vim-hug-neovim-rpc](https://github.com/roxma/vim-hug-neovim-rpc)
+  - `g:python3_host_prog` or `python3` in your `$PATH`
 
 ## Usage
 
