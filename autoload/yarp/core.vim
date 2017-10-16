@@ -63,8 +63,16 @@ func! yarp#core#wait_channel() dict
     if ! has_key(self, 'job')
         call self.jobstart()
     endif
+    if get(self, 'job', -1) == -1
+        throw '[' . self.module . '] job is not running'
+    endif
+    let cnt = 5000 / 20
     while ! has_key(self, 'channel')
         sleep 20m
+        let cnt = cnt - 1
+        if cnt <= 0
+            throw '[' . self.module . '] failed communicating to channel'
+        endif
     endwhile
 endfunc
 
@@ -76,7 +84,7 @@ func! yarp#core#jobstart() dict
             return
         endif
     endif
-    if has_key(self, 'job') && self.job >= 0
+    if has_key(self, 'job')
         return
     endif
     if exists('*jobstart')
@@ -85,10 +93,15 @@ func! yarp#core#jobstart() dict
         let jobstart = get(g:, 'yarp_jobstart', 'neovim_rpc#jobstart')
     endif
     let opts = {'on_stderr': function('yarp#core#on_stderr'), 'self': self}
-    let self.job = call(jobstart, [self.cmd, opts])
-    if self.job == -1
-        call self.error('Failed starting job: ' . string(self.cmd))
-    endif
+    try
+        let self.job = call(jobstart, [self.cmd, opts])
+        if self.job == -1
+            call self.error('Failed starting job: ' . string(self.cmd))
+        endif
+    catch
+        let self.job = -1
+        call self.error(['Failed starting job: ' . string(self.cmd), v:exception])
+    endtry
 endfunc
 
 func! yarp#core#serveraddr()
