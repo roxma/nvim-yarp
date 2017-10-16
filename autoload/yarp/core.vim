@@ -71,7 +71,7 @@ func! yarp#core#wait_channel() dict
         sleep 20m
         let cnt = cnt - 1
         if cnt <= 0
-            throw '[yarp] [' . self.module . '] failed communicating to channel: ' . string(self.cmd) 
+            throw '[yarp] [' . self.module . '] failed establishing channel for ' . string(self.cmd)
         endif
     endwhile
 endfunc
@@ -126,9 +126,9 @@ func! yarp#core#error(mod, msg)
     else
         let lines = a:msg
     endif
-    echoh ErrorMsg 
+    echoh ErrorMsg
     for line in lines
-        echom '[ERROR] [' . a:mod . '] ' . line 
+        echom '[ERROR] [' . a:mod . '@yarp] ' . line
     endfor
-    echoh None 
+    echoh None
 endfunc
