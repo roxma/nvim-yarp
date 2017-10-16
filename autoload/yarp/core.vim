@@ -64,14 +64,14 @@ func! yarp#core#wait_channel() dict
         call self.jobstart()
     endif
     if get(self, 'job', -1) == -1
-        throw '[' . self.module . '] job is not running'
+        throw '[yarp] [' . self.module . '] job is not running'
     endif
     let cnt = 5000 / 20
     while ! has_key(self, 'channel')
         sleep 20m
         let cnt = cnt - 1
         if cnt <= 0
-            throw '[' . self.module . '] failed communicating to channel'
+            throw '[yarp] [' . self.module . '] failed communicating to channel: ' . string(self.cmd) 
         endif
     endwhile
 endfunc
@@ -80,7 +80,7 @@ func! yarp#core#jobstart() dict
     if ! has_key(self, 'cmd')
         call self.init()
         if ! has_key(self, 'cmd')
-            call self.error("cmd not set")
+            call self.error("cmd of the job is not set")
             return
         endif
     endif
