@@ -37,7 +37,6 @@ func! yarp#core#channel_started(id, channel)
 endfunc
 
 func! yarp#core#request(method, ...) dict
-    call self.init()
     call self.wait_channel()
     if exists('*rpcrequest')
         let rpcrequest = 'rpcrequest'
@@ -48,7 +47,6 @@ func! yarp#core#request(method, ...) dict
 endfunc
 
 func! yarp#core#notify(method, ...) dict
-    call self.init()
     call self.wait_channel()
     if exists('*rpcnotify')
         let rpcnotify = 'rpcnotify'
@@ -59,12 +57,25 @@ func! yarp#core#notify(method, ...) dict
 endfunc
 
 func! yarp#core#wait_channel() dict
+    if has_key(self, 'channel')
+        return
+    endif
+    if ! has_key(self, 'job')
+        call self.jobstart()
+    endif
     while ! has_key(self, 'channel')
         sleep 20m
     endwhile
 endfunc
 
 func! yarp#core#jobstart() dict
+    if ! has_key(self, 'cmd')
+        call self.init()
+        if ! has_key(self, 'cmd')
+            call self.error("cmd not set")
+            return
+        endif
+    endif
     if has_key(self, 'job') && self.job >= 0
         return
     endif
