@@ -28,7 +28,7 @@ for path in paths.split("\n"):
     if path not in sys.path:
         sys.path.append(path)
 
-nvim.call('yarp#_channel_started', yarpid, nvim.channel_id)
+nvim.call('yarp#core#channel_started', yarpid, nvim.channel_id)
 
 module_obj = importlib.import_module(module)
 
