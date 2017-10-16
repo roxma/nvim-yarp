@@ -11,7 +11,8 @@ This is my attempt on writing a remote plugin framework without
   - [roxma/vim-hug-neovim-rpc](https://github.com/roxma/vim-hug-neovim-rpc)
   - `g:python3_host_prog` pointed to your python3 executable, or `echo
       exepath('python3')` is not empty.
-  - [neovim python client](`pip3 install neovim`)
+  - [neovim python client](https://github.com/neovim/python-client) (`pip3
+      install neovim`)
 
 ## Usage
 
