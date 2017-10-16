@@ -9,7 +9,9 @@ This is my attempt on writing a remote plugin framework without
 - `has('python3')`
 - For Vim 8:
   - [roxma/vim-hug-neovim-rpc](https://github.com/roxma/vim-hug-neovim-rpc)
-  - `g:python3_host_prog` or `python3` in your `$PATH`
+  - `g:python3_host_prog` pointed to your python3 executable, or `echo
+      exepath('python3')` is not empty.
+  - [neovim python client](`pip3 install neovim`)
 
 ## Usage
 
@@ -33,6 +35,17 @@ com HelloAsync call s:hello.notify('greet')
 
 " You could type :Hello greet
 com -nargs=1 Hello call s:hello.request(<f-args>)
+```
+
+## Debugging
+
+Add logging settigns to your vimrc. Log files will be generated with prefix
+`/tmp/nvim_log`. An alternative is to export environment variables before
+starting vim/nvim.
+
+```vim
+let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
+let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
 ```
 
 ## Example for existing neovim rplugin porting to Vim 8
