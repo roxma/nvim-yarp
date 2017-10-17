@@ -56,11 +56,11 @@ func! s:py3exe() dict
                     \ "Python3 executable [" .
                     \ g:_yarp_py3 .
                     \ "] not found.")
-        if v:vim_did_enter == 0
+        if has('vim_starting')
             call self.error("")
         endif
         call self.error("###### Please configure g:python3_host_prog proerly ######")
-        if v:vim_did_enter == 0
+        if has('vim_starting')
             call self.error("")
         endif
     endif
