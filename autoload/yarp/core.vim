@@ -46,7 +46,9 @@ endfunc
 func! yarp#core#on_exit(chan_id, data, event) dict
     let mod = self.self
     let mod.job_is_dead = 1
-    call mod.error("Job is dead. cmd=" . string(mod.cmd))
+    if v:dying == 0
+        call mod.error("Job is dead. cmd=" . string(mod.cmd))
+    endif
 endfunc
 
 func! yarp#core#channel_started(id, channel)
