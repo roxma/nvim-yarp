@@ -6,7 +6,7 @@ func! yarp#pyx#init() dict
         let l:Detect = function('s:py3exe')
     endif
 
-    let exe = l:Detect()
+    let exe = call(l:Detect, [], self)
 
     if get(s:, 'script', '') == ''
         let s:script = globpath(&rtp,'pythonx/yarp.py',1)
@@ -20,7 +20,7 @@ func! yarp#pyx#init() dict
     call self.jobstart()
 endfunc
 
-func! s:pyexe()
+func! s:pyexe() dict
     if get(g:, '_yarp_py', '')
         return g:_yarp_py
     endif
@@ -37,7 +37,7 @@ func! s:pyexe()
     return g:_yarp_py
 endfunc
 
-func! s:py3exe()
+func! s:py3exe() dict
     if get(g:, '_yarp_py3', '')
         return g:_yarp_py3
     endif
@@ -52,11 +52,17 @@ func! s:py3exe()
         let g:_yarp_py3 = 'python3'
     endif
     if exepath(g:_yarp_py3) == ''
-        call yarp#core#error('yarp', 
+        call self.error(
                     \ "Python3 executable [" .
                     \ g:_yarp_py3 .
                     \ "] not found.")
-        call yarp#core#error('yarp', "Please configure g:python3_host_prog proerly")
+        if v:vim_did_enter == 0
+            call self.error("")
+        endif
+        call self.error("###### Please configure g:python3_host_prog proerly ######")
+        if v:vim_did_enter == 0
+            call self.error("")
+        endif
     endif
     return g:_yarp_py3
 endfunc

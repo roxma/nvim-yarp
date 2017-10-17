@@ -129,7 +129,7 @@ func! yarp#core#error(mod, msg)
     endif
     echoh ErrorMsg
     for line in lines
-        echom '[ERROR] [' . a:mod . '@yarp] ' . line
+        echom '[' . a:mod . '@yarp] ' . line
     endfor
     echoh None
 endfunc
