@@ -46,7 +46,7 @@ endfunc
 func! yarp#core#on_exit(chan_id, data, event) dict
     let mod = self.self
     let mod.job_is_dead = 1
-    call mod.error("Job is dead.")
+    call mod.error("Job is dead. cmd=" . string(mod.cmd))
 endfunc
 
 func! yarp#core#channel_started(id, channel)
@@ -99,7 +99,9 @@ func! yarp#core#jobstart() dict
     if has_key(self, 'job')
         return
     endif
-    let opts = {'on_stderr': function('yarp#core#on_stderr'), 'self': self}
+    let opts = {'on_stderr': function('yarp#core#on_stderr'),
+            \ 'on_exit': function('yarp#core#on_exit'),
+            \ 'self': self}
     try
         let self.job = call(s:jobstart, [self.cmd, opts])
         if self.job == -1
