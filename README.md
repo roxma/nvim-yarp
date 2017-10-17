@@ -51,8 +51,9 @@ let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
 
 ## Example for existing neovim rplugin porting to Vim 8
 
-A full demo could be found at
-[nvim-typescript#84](https://github.com/mhartington/nvim-typescript/pull/84).
+More realistic examples could be found at
+[nvim-typescript#84](https://github.com/mhartington/nvim-typescript/pull/84),
+[deoplete#553](https://github.com/Shougo/deoplete.nvim/pull/553).
 
 Now let's consider the following simple rplugin.
 
