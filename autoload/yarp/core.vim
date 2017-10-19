@@ -1,5 +1,17 @@
+if get(s:, 'loaded', 0)
+    finish
+endif
+let s:loaded = 1
+
 let s:id = 1
 let s:reg = {}
+let s:leaving = 0
+
+augroup yarp
+    autocmd!
+    " this one is which you're most likely to use?
+    autocmd VimLeavePre * let s:leaving = 1 
+augroup end
 
 if has('nvim')
     let s:rpcrequest = 'rpcrequest'
@@ -46,7 +58,7 @@ endfunc
 func! yarp#core#on_exit(chan_id, data, event) dict
     let mod = self.self
     let mod.job_is_dead = 1
-    if v:dying == 0
+    if v:dying == 0 && s:leaving == 0
         call mod.error("Job is dead. cmd=" . string(mod.cmd))
     endif
 endfunc
