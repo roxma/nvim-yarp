@@ -98,7 +98,7 @@ func! yarp#core#wait_channel() dict
             throw '[yarp] [' . self.module . '] timeout establishing channel for ' . string(self.cmd)
         endif
         let cnt = cnt - 1
-        sleep 20m
+        silent sleep 20m
     endwhile
 endfunc
 
