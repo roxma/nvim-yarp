@@ -59,7 +59,7 @@ func! s:py3exe() dict
         if has('vim_starting')
             call self.error("")
         endif
-        call self.error("###### Please configure g:python3_host_prog proerly ######")
+        call self.error("###### Please configure g:python3_host_prog properly ######")
         if has('vim_starting')
             call self.error("")
         endif
