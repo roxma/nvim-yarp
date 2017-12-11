@@ -13,6 +13,7 @@ func! yarp#pyx#init() dict
     endif
 
     let self.cmd = [exe, 
+                \ '-u',
                 \ s:script,
                 \ yarp#core#serveraddr(),
                 \ self.id,
