@@ -53,7 +53,8 @@ let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
 
 More realistic examples could be found at
 [nvim-typescript#84](https://github.com/mhartington/nvim-typescript/pull/84),
-[deoplete#553](https://github.com/Shougo/deoplete.nvim/pull/553).
+[deoplete#553](https://github.com/Shougo/deoplete.nvim/pull/553),
+[callmekohei/quickdebug](https://github.com/callmekohei/quickdebug).
 
 Now let's consider the following simple rplugin.
 
@@ -64,7 +65,6 @@ Bar()`.
 # rplugin/python3/foo.py
 import neovim
 
-
 @neovim.plugin
 class Foo(object):
 
@@ -73,7 +73,7 @@ class Foo(object):
 
     @neovim.function("Bar", sync=True)
     def bar(self, args):
-        return 'foobar'
+        return 'hello' + str(args)
 ```
 
 For working on Vim 8, you need to add these two files:
@@ -87,8 +87,8 @@ endif
 
 let s:foo = yarp#py3('foo_wrap')
 
-func! Bar()
-    return s:foo.call('bar')
+func! Bar(v)
+    return s:foo.call('bar',a:v)
 endfunc
 ```
 
@@ -103,4 +103,13 @@ _obj = _Foo(vim)
 
 def bar(*args):
     return _obj.bar(args)
+```
+
+How to use
+```
+$ vim
+
+: echo bar('world')
+
+hello('world',)
 ```
