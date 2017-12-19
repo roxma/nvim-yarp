@@ -58,8 +58,8 @@ More realistic examples could be found at
 
 Now let's consider the following simple rplugin.
 
-After `UpdateRemotePlugins` and restarting neovim, you get `foobar` by `:echo
-Bar()`.
+After `UpdateRemotePlugins` and restarting neovim, you get `hello('world',)` by `:echo
+Bar('hello')`.
 
 ```python
 # rplugin/python3/foo.py
