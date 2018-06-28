@@ -1,11 +1,16 @@
 from neovim import attach, setup_logging
 import sys
 import importlib
+from os import environ
+
+assert __name__ == "__main__"
 
 serveraddr = sys.argv[1]
 yarpid = int(sys.argv[2])
 module = sys.argv[3]
 module_obj = None
+
+environ['NVIM_YARP_MODULE'] = module
 
 setup_logging(module)
 
