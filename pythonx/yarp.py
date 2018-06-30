@@ -57,4 +57,7 @@ def on_setup():
     pass
 
 
-nvim.run_loop(on_request, on_notification, on_setup)
+try:
+    nvim.run_loop(on_request, on_notification, on_setup)
+finally:
+    nvim.close()
