@@ -5,6 +5,9 @@ from os import environ
 
 assert __name__ == "__main__"
 
+if "" in sys.path:
+    sys.path.remove("")
+
 serveraddr = sys.argv[1]
 yarpid = int(sys.argv[2])
 module = sys.argv[3]
