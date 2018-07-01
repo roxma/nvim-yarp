@@ -84,18 +84,19 @@ endfunc
 func! yarp#core#try_notify(method, ...) dict
     call self.jobstart()
     if get(self, 'job_is_dead', 0)
-        self.error('try_notify ' . a:method . ' failed, job is dead')
+        call self.error('try_notify ' . a:method . ' failed, job is dead')
         return 0
     endif
     if !has_key(self, 'channel')
         " not yet started
         return 0
     endif
+    let args = [self.channel, a:method] + a:000
     try
-        call call(s:rpcnotify, [self.channel, a:method] + a:000)
+        call call(s:rpcnotify, args)
         return 1
     catch
-        self.error('try_notify ' . a:method . ' failed: ' . v:exception)
+        call self.error('try_notify ' . s:rpcnotify . ' ' . a:method . ' failed: ' . v:exception . ', ' . string(args))
         return 0
     endtry
 endfunc
