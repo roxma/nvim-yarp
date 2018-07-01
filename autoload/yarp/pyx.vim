@@ -18,6 +18,8 @@ func! yarp#pyx#init() dict
                 \ yarp#core#serveraddr(),
                 \ self.id,
                 \ self.module]
+
+     call self.jobstart()
 endfunc
 
 func! s:pyexe() dict

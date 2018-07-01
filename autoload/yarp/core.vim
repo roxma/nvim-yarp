@@ -127,15 +127,15 @@ func! yarp#core#wait_channel() dict
 endfunc
 
 func! yarp#core#jobstart() dict
-    if has_key(self, 'job')
-        return
-    endif
     if ! has_key(self, 'cmd')
         call self.init()
         if ! has_key(self, 'cmd')
             call self.error("cmd of the job is not set")
             return
         endif
+    endif
+    if has_key(self, 'job')
+        return
     endif
     let opts = {'on_stderr': function('yarp#core#on_stderr'),
             \ 'on_exit': function('yarp#core#on_exit'),
