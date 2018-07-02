@@ -14,6 +14,11 @@ This is my attempt on writing a remote plugin framework without
   - [neovim python client](https://github.com/neovim/python-client) (`pip3
       install neovim`)
 
+## Use case
+
+- [shougo/deoplete.nvim](https://github.com/shougo/deoplete.nvim)
+- [ncm2/ncm2](https://github.com/ncm2/ncm2) and most of its plugins
+
 ## Usage
 
 pythonx/hello.py
