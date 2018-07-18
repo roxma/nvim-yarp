@@ -42,6 +42,7 @@ func! yarp#core#new()
     let rp.notify = function('yarp#core#notify')
     let rp.try_notify = function('yarp#core#try_notify')
     let rp.wait_channel = function('yarp#core#wait_channel')
+    let rp.on_load = function('yarp#core#_nop')
     let rp.id = s:id
     let rp.job_is_dead = 0
     let s:reg[rp.id] = rp
@@ -49,6 +50,9 @@ func! yarp#core#new()
     " reserved for user
     let rp.extra = {}
     return rp
+endfunc
+
+func! yarp#core#_nop(...) dict
 endfunc
 
 func! yarp#core#on_stderr(chan_id, data, event) dict
@@ -68,7 +72,9 @@ func! yarp#core#on_exit(chan_id, data, event) dict
 endfunc
 
 func! yarp#core#channel_started(id, channel)
-    let s:reg[a:id].channel = a:channel
+    let rp = s:reg[a:id]
+    let rp.channel = a:channel
+    call call(rp.on_load, [], rp)
 endfunc
 
 func! yarp#core#request(method, ...) dict

@@ -56,9 +56,9 @@ try:
         if path not in sys.path:
             sys.path.append(path)
 
-    nvim.call('yarp#core#channel_started', yarpid, nvim.channel_id)
-
     module_obj = importlib.import_module(module)
+
+    nvim.call('yarp#core#channel_started', yarpid, nvim.channel_id)
 
     nvim.run_loop(on_request, on_notification, on_setup)
 finally:
