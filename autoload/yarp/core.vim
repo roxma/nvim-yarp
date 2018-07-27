@@ -28,11 +28,10 @@ else
     let s:serveraddr = get(g:, 'yarp_serveraddr', 'neovim_rpc#serveraddr')
 endif
 
-func! yarp#core#new()
+func! yarp#core#new(rp)
     let s:id = s:id + 1
 
-    let rp = {}
-
+    let rp = a:rp
     let rp.jobstart = function('yarp#core#jobstart')
     func rp.error(msg) dict
         call yarp#core#error(self.module, a:msg)
@@ -42,13 +41,16 @@ func! yarp#core#new()
     let rp.notify = function('yarp#core#notify')
     let rp.try_notify = function('yarp#core#try_notify')
     let rp.wait_channel = function('yarp#core#wait_channel')
-    let rp.on_load = function('yarp#core#_nop')
     let rp.id = s:id
     let rp.job_is_dead = 0
     let s:reg[rp.id] = rp
 
+    " options
+    let rp.on_load = get(rp, 'on_load', function('yarp#core#_nop'))
+    let rp.job_detach = get(rp, 'job_detach', 0)
+
     " reserved for user
-    let rp.extra = {}
+    let rp.user_data = get(rp, 'user_data', {})
     return rp
 endfunc
 
@@ -145,6 +147,7 @@ func! yarp#core#jobstart() dict
     endif
     let opts = {'on_stderr': function('yarp#core#on_stderr'),
             \ 'on_exit': function('yarp#core#on_exit'),
+            \ 'detach': self.job_detach,
             \ 'self': self}
     try
         let self.job = call(s:jobstart, [self.cmd, opts])
