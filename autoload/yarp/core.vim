@@ -68,9 +68,16 @@ func! yarp#core#on_exit(chan_id, data, event) dict
     if has_key(mod, 'channel')
         unlet mod.channel
     endif
-    if v:dying == 0 && s:leaving == 0
-        call mod.error("Job is dead. cmd=" . string(mod.cmd))
+
+    if has("nvim")
+        if v:exiting is 0
+            call mod.error("ignore job dead v:exiting is 0")
+            return
+        endif
+    elseif v:dying || s:leaving
+        return
     endif
+    call mod.error("Job is dead. cmd=" . string(mod.cmd))
 endfunc
 
 func! yarp#core#channel_started(id, channel)
