@@ -71,7 +71,6 @@ func! yarp#core#on_exit(chan_id, data, event) dict
 
     if has("nvim")
         if v:exiting is 0
-            call mod.error("ignore job dead v:exiting is 0")
             return
         endif
     elseif v:dying || s:leaving
