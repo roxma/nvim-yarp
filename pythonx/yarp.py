@@ -1,4 +1,4 @@
-from neovim import attach, setup_logging
+from pynvim import attach, setup_logging
 import sys
 import importlib
 from os import environ
