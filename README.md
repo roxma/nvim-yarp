@@ -12,7 +12,7 @@ This is my attempt on writing a remote plugin framework without
   - `g:python3_host_prog` pointed to your python3 executable, or `echo
       exepath('python3')` is not empty.
   - [neovim python client](https://github.com/neovim/python-client) (`pip3
-      install neovim`)
+      install pynvim`)
 
 ## Use case
 
@@ -68,15 +68,15 @@ Bar()`.
 
 ```python
 # rplugin/python3/foo.py
-import neovim
+import pynvim
 
-@neovim.plugin
+@pynvim.plugin
 class Foo(object):
 
     def __init__(self, vim):
         self._vim = vim
 
-    @neovim.function("Bar", sync=True)
+    @pynvim.function("Bar", sync=True)
     def bar(self, args):
         return 'hello' + str(args)
 ```
