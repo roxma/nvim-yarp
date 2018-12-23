@@ -1,4 +1,10 @@
-from neovim import attach, setup_logging
+from importlib.util import find_spec
+
+if find_spec('pynvim'):
+    from pynvim import attach, setup_logging
+else:
+    from neovim import attach, setup_logging
+
 import sys
 import importlib
 from os import environ
