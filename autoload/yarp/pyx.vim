@@ -44,11 +44,37 @@ func! s:py3exe() dict
         return g:_yarp_py3
     endif
     let g:_yarp_py3 = get(g:, 'python3_host_prog', '')
-    if g:_yarp_py3 == '' && has('nvim') && has('python3')
+    if g:_yarp_py3 == '' && has('python3')
+      if has('nvim')
         " heavy weight
         " but better support for python detection
         python3 import sys
         let g:_yarp_py3 = py3eval('sys.executable')
+      else "works in vim
+python3 << EOF
+from os.path import join, exists
+import os
+from sys import executable
+from sys import base_exec_prefix as base
+
+candidates = [
+        join(base, 'python3'),
+        join(base, 'python'),
+        join(base, 'bin', 'python3'),
+        join(base, 'bin', 'python'),
+        ]
+
+if os.name == 'nt':
+  candidates.extend(c + '.exe' for c in candidates
+                    if not c.lower().endswith('.exe'))
+candidates.append(executable)
+
+# the following works because at least executable always exists
+py3_binary = next(c for c in candidates if exists(c))
+EOF
+
+      let g:_yarp_py3 = py3eval('py3_binary')
+      endif
     endif
     if g:_yarp_py3 == ''
         let g:_yarp_py3 = 'python3'
