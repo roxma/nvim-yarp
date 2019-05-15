@@ -36,6 +36,9 @@ func! yarp#core#new(rp)
     func rp.error(msg) dict
         call yarp#core#error(self.module, a:msg)
     endfunc
+    func rp.warn(msg) dict
+        call yarp#core#warn(self.module, a:msg)
+    endfunc
     let rp.call = function('yarp#core#request')
     let rp.request = function('yarp#core#request')
     let rp.notify = function('yarp#core#notify')
@@ -181,6 +184,23 @@ func! yarp#core#error(mod, msg)
         let lines = a:msg
     endif
     echoh ErrorMsg
+    for line in lines
+        echom '[' . a:mod . '@yarp] ' . line
+    endfor
+    echoh None
+endfunc
+
+func! yarp#core#warn(mod, msg)
+    if mode() == 'i'
+        " NOTE: side effect, sorry, but this is necessary
+        set nosmd
+    endif
+    if type(a:msg) == type("")
+        let lines = split(a:msg, "\n", 1)
+    else
+        let lines = a:msg
+    endif
+    echoh WarningMsg
     for line in lines
         echom '[' . a:mod . '@yarp] ' . line
     endfor
