@@ -54,6 +54,35 @@ let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
 let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
 ```
 
+## Options
+
+`let s:yarp.on_load = function('your_handler')`
+
+A handler that is called after your python module is loaded. It is not
+considered ready for request or notification from vimscript during loading
+stage. `s:yarp.request` and `s:yarp.notify` internally wait until `on_load`
+before sending actual request and notification.
+
+## Methods
+
+`call s:yarp.reqeust({event}, [, {args}...])`
+
+Similiar to `:help rpcrequest`. It sends a request to the rpc channel and
+returns the result of your python method.
+
+`call s:yarp.rpcnotify({event}, [, {args}...])`
+
+Similiar to `:help rpcnotify`. It sends a notification to the rpc channel and
+returns immediately.
+
+`call s:yarp.error(msg)`
+
+Print error message.
+
+`call s:yarp.warn(msg)`
+
+Print warning message.
+
 ## Example for existing neovim rplugin porting to Vim 8
 
 More realistic examples could be found at
