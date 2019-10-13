@@ -9,10 +9,10 @@ func! yarp#pyx#init() dict
     let exe = call(l:Detect, [], self)
 
     if get(s:, 'script', '') == ''
-        let s:script = globpath(&rtp,'pythonx/yarp.py',1)
+        let s:script = globpath(&rtp,'pythonx/yarp.py',1,1)[0]
     endif
 
-    let self.cmd = [exe, 
+    let self.cmd = [exe,
                 \ '-u',
                 \ s:script,
                 \ yarp#core#serveraddr(),
