@@ -1,8 +1,6 @@
-from importlib.util import find_spec
-
-if find_spec('pynvim'):
+try:
     from pynvim import attach, setup_logging
-else:
+except ImportError:
     from neovim import attach, setup_logging
 
 import sys
