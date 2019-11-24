@@ -26,7 +26,7 @@ func! s:pyexe() dict
     if get(g:, '_yarp_py', '')
         return g:_yarp_py
     endif
-    let g:_yarp_py = get(g:, 'python_host_prog', '')
+    let g:_yarp_py = expand(get(g:, 'python_host_prog', ''))
     if g:_yarp_py == '' && has('nvim') && has('python')
         " heavy weight
         " but better support for python detection
@@ -43,7 +43,7 @@ func! s:py3exe() dict
     if get(g:, '_yarp_py3', '')
         return g:_yarp_py3
     endif
-    let g:_yarp_py3 = get(g:, 'python3_host_prog', '')
+    let g:_yarp_py3 = expand(get(g:, 'python3_host_prog', ''))
     if g:_yarp_py3 == '' && has('nvim') && has('python3')
         " heavy weight
         " but better support for python detection
