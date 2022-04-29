@@ -19,8 +19,10 @@ This is my attempt on writing a remote plugin framework without
 ### With [Vim-Plug](https://github.com/junegunn/vim-plug), use:
 
 ```vim
+    " Required for vim 8
+    Plug 'roxma/vim-hug-neovim-rpc'
+    " Install this plugin
     Plug 'roxma/nvim-yarp', { 'do': 'pip install -r requirements.txt' }
-    
 ```
 
 ## Use case
