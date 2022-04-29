@@ -20,13 +20,7 @@ This is my attempt on writing a remote plugin framework without
 
 ```vim
     Plug 'roxma/nvim-yarp', { 'do': 'pip install -r requirements.txt' }
-```
-
-### With [Pathogen](https://github.com/tpope/vim-pathogen), use:
-
-```shell
-    cd ~/.vim/bundle
-    git clone https://github.com/ roxma/nvim-yarp
+    
 ```
 
 ## Use case
