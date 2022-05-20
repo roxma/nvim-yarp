@@ -14,6 +14,17 @@ This is my attempt on writing a remote plugin framework without
   - [pynvim](https://github.com/neovim/pynvim) (`pip3
       install pynvim`)
 
+## Installation
+
+### With [Vim-Plug](https://github.com/junegunn/vim-plug), use:
+
+```vim
+    " Required for vim 8
+    Plug 'roxma/vim-hug-neovim-rpc'
+    " Install this plugin
+    Plug 'roxma/nvim-yarp', { 'do': 'pip install -r requirements.txt' }
+```
+
 ## Use case
 
 - [shougo/deoplete.nvim](https://github.com/shougo/deoplete.nvim)
